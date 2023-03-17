@@ -36,6 +36,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository_owner }}/filebeat-for-cloudwatch
           tags: |
+            latest=false
             type=semver,pattern={{version}},prefix=${{ matrix.filebeat_version }}-
             type=semver,pattern={{major}}.{{minor}},prefix=${{ matrix.filebeat_version }}-
             type=semver,pattern={{major}},prefix=${{ matrix.filebeat_version }}-
