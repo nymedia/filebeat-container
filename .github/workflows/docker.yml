@@ -35,12 +35,14 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ghcr.io/${{ github.repository_owner }}/filebeat-for-cloudwatch
-          tags: |
+          flavor: |
             latest=false
-            type=semver,pattern={{version}},prefix=${{ matrix.filebeat_version }}-
-            type=semver,pattern={{major}}.{{minor}},prefix=${{ matrix.filebeat_version }}-
-            type=semver,pattern={{major}},prefix=${{ matrix.filebeat_version }}-
-            type=ref,event=branch,prefix=${{ matrix.filebeat_version }}
+            prefix=${{ matrix.filebeat_version }}-
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=branch
 
       - name: Build and push custom Filebeat image
         uses: docker/build-push-action@v4
