@@ -1,0 +1,9 @@
+filebeat.config.inputs:
+  enabled: true
+  path: ${path.config}/aws-cloudwatch-input.yml
+
+output.elasticsearch:
+  hosts: ['${ELASTICSEARCH_HOST:"elasticsearch:443"}']
+  protocol: "${ELASTICSEARCH_PROTO:https}"
+  username: "${ELASTICSEARCH_USERNAME}"
+  password: "${ELASTICSEARCH_PASSWORD}"
