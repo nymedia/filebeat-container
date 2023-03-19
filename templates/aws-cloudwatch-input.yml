@@ -1,3 +1,2 @@
 - type: aws-cloudwatch
   log_group_arn: ${LOG_GROUP_ARN}
-  credential_profile_name: ecsInstanceRole
