@@ -4,6 +4,7 @@ cloudwatch_log_group_arn: ""
 cloudwatch_start_position: "end"
 
 elasticsearch:
+  #@schema/default ["elasticsearch:9200"]
   hosts: [""]
   protocol: "https"
   username: ""
