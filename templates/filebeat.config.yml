@@ -1,0 +1,14 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+---
+filebeat.config.inputs:
+#@ if data.values.cloudwatch_log_group_arn != "":
+  - type: aws-cloudwatch
+    log_group_arn: #@ data.values.cloudwatch_log_group_arn
+    start_position: #@ data.values.cloudwatch_start_position
+#@ end
+
+output.elasticsearch: #@ data.values.elasticsearch
+
+setup.template: #@ data.values.setup.template
+setup.ilm: #@ data.values.setup.ilm

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+
+if [[ "${DEBUG:-no}" != "no" ]]; then
+  set -x
+fi
+
+set -euo pipefail
+
+BASE_DIR=/usr/share/filebeat
+TPL_DIR=templates
+
+ytt -s -f "$BASE_DIR/$TPL_DIR/filebeat.ytt-schema.yml" \
+  -f "$BASE_DIR/$TPL_DIR/filebeat.config.yml" \
+  --data-values-env-yaml FILEBEAT \
+  > $BASE_DIR/filebeat.yml
+
+# Run the original Docker entrypoint script
+exec /usr/local/bin/docker-entrypoint "$@"

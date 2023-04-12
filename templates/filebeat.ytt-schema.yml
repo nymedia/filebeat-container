@@ -1,0 +1,19 @@
+#@data/values-schema
+---
+cloudwatch_log_group_arn: ""
+cloudwatch_start_position: "end"
+
+elasticsearch:
+  hosts: [""]
+  protocol: "https"
+  username: ""
+  password: ""
+
+setup:
+  template:
+    name: "filebeat-%{[agent.version]}"
+    overwrite: true
+  ilm:
+    enabled: true
+    policy_name: "filebeat"
+    overwrite: true
