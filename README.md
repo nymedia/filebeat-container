@@ -18,8 +18,19 @@ Make sure to set the required environment variables when running the container. 
 
 ```sh
 docker run -e FILEBEAT_cloudwatch_log_group_arn=your_log_group_arn \
-           -e FILEBEAT_elasticsearch__hosts="your_elasticsearch_host:9200" \
+           -e FILEBEAT_elasticsearch__hosts=["your_elasticsearch_host:9200"] \
            -e FILEBEAT_elasticsearch__username=your_username \
            -e FILEBEAT_elasticsearch__password=your_password \
            your_custom_filebeat_image
 ```
+
+#### Common environment variables
+
+Those are the env vars which you'lll usually setup.
+
+ - `FILEBEAT_cloudwatch_log_group_arn`
+   Indicates the Amazon CloudWatch Log Group ARN, example: `arn:aws:logs:eu-west-1:1234567890:log-group:/ecs/logs/ns-name-env-stage:*`
+   This is most likely going to be set on each project, without specifying this the container has no inputs.
+- `FILEBEAT_elasticsearch__hosts/username/password`:
+  Sets up the elasticsearch output, the hosts must be specified as a json array.
+  This is most likely going to be set on each project, without specifying this the container has no outputs.

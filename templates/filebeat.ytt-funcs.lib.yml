@@ -1,0 +1,25 @@
+#@ load("@ytt:data", "data")
+
+#@ def default_processors():
+- add_host_metadata: !!null
+- add_cloud_metadata: !!null
+- timestamp:
+    ignore_missing: true
+    ignore_failure: true
+    field: extra.elasticsearch_date
+    timezone: "Europe/Oslo"
+    layouts:
+      - "2006-01-02T15:04:05Z"
+      - "2006-01-02T15:04:05.999Z"
+    test:
+      - "2019-06-22T16:33:51Z"
+      - "2006-01-02T15:04:05.999Z"
+#@ end
+
+#@ def add_project_field_processor():
+- add_fields:
+    target: project
+    fields:
+      name: #@ data.values.project_name
+#@ end
+---
