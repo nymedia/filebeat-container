@@ -10,6 +10,7 @@ elasticsearch:
   username: ""
   password: ""
 
+#@schema/type any=True
 setup:
   template:
     name: "filebeat-%{[agent.version]}"
@@ -18,3 +19,12 @@ setup:
     enabled: true
     policy_name: "filebeat"
     overwrite: true
+
+#@schema/type any=True
+modules:
+
+#@schema/type any=True
+xpack:
+
+#@schema/type any=True
+logging:

@@ -10,5 +10,14 @@ filebeat.config.inputs:
 
 output.elasticsearch: #@ data.values.elasticsearch
 
-setup.template: #@ data.values.setup.template
-setup.ilm: #@ data.values.setup.ilm
+#@ if/end data.values.modules:
+filebeat.modules: #@ data.values.modules
+
+#@ if/end data.values.setup:
+setup: #@ data.values.setup
+
+#@ if/end data.values.xpack:
+xpack: #@ data.values.xpack
+
+#@ if/end data.values.logging:
+logging: #@ data.values.logging
