@@ -1,0 +1,58 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+#@ load("@ytt:overlay", "overlay")
+
+#@ load("filebeat.ytt-funcs.lib.yml", "default_processors", "add_project_field_processor")
+
+#@ def cloudwatch_input(prefix):
+type: aws-cloudwatch
+log_group_arn: #@ data.values.cloudwatch_log_group_arn
+region_name: #@ data.values.cloudwatch_aws_region
+log_stream_prefix: #@ prefix
+start_position: end
+processors: []
+#@ end
+
+
+#@ def cw_json_input():
+processors:
+- copy_fields:
+    fields:
+      - from: "message"
+        to: "event.original"
+    fail_on_error: false
+    ignore_missing: true
+- decode_json_fields:
+    fields: ["message"]
+    target: ""
+    overwrite_keys: true
+    max_depth: 2
+#@ end
+
+---
+fields_under_root: true
+fields:
+  project.name: #@ data.values.project_name
+
+filebeat.inputs:
+#@ if data.values.cloudwatch_log_group_arn != "":
+  - #@  overlay.apply(cloudwatch_input("/drupal/php/"), cw_json_input())
+  - #@  overlay.apply(cloudwatch_input("/drupal/cron/"), cw_json_input())
+  - #@ cloudwatch_input("/drupal/nginx/")
+#@ end
+
+output.elasticsearch: #@ data.values.elasticsearch
+
+#@ if/end data.values.modules:
+filebeat.modules: #@ data.values.modules
+
+processors: #@ overlay.apply(default_processors(), add_project_field_processor(), data.values.processors)
+
+#@ if/end data.values.setup:
+setup: #@ data.values.setup
+
+#@ if/end data.values.xpack:
+xpack: #@ data.values.xpack
+
+#@ if/end data.values.logging:
+logging: #@ data.values.logging

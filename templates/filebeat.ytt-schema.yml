@@ -1,0 +1,38 @@
+#@data/values-schema
+---
+project_name: "drupal"
+
+#@schema/nullable
+#@schema/validation min_len=40
+cloudwatch_log_group_arn: ""
+cloudwatch_aws_region: "eu-west-1"
+
+elasticsearch:
+  #@schema/default ["elasticsearch:9200"]
+  hosts: [""]
+  #@schema/validation one_of=["http", "https"]
+  protocol: "https"
+  username: ""
+  password: ""
+
+#@schema/type any=True
+setup:
+  template:
+    name: "filebeat-%{[agent.version]}"
+    overwrite: false
+  ilm:
+    enabled: true
+    policy_name: "filebeat"
+    overwrite: false
+
+#@schema/type any=True
+modules:
+
+#@schema/type any=True
+xpack:
+
+#@schema/type any=True
+logging:
+
+#@schema/type any=True
+processors: []
