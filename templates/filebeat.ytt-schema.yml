@@ -19,11 +19,11 @@ elasticsearch:
 setup:
   template:
     name: "filebeat-%{[agent.version]}"
-    overwrite: true
+    overwrite: false
   ilm:
     enabled: true
     policy_name: "filebeat"
-    overwrite: true
+    overwrite: false
 
 #@schema/type any=True
 modules:
