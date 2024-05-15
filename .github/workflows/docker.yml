@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        filebeat_version: ["7.17.8", "8.6.2"]
+        filebeat_version: ["7.17.8", "8.6.2", "8.13.3"]
     steps:
       - name: Check out code
         uses: actions/checkout@v3
