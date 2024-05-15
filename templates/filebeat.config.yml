@@ -4,11 +4,12 @@
 
 #@ load("filebeat.ytt-funcs.lib.yml", "default_processors", "add_project_field_processor")
 
-#@ def cloudwatch_input(prefix):
+#@ def cloudwatch_input(id, prefix):
 type: aws-cloudwatch
 log_group_arn: #@ data.values.cloudwatch_log_group_arn
 region_name: #@ data.values.cloudwatch_aws_region
 log_stream_prefix: #@ prefix
+id: #@ id
 start_position: end
 processors: []
 #@ end
@@ -36,9 +37,9 @@ fields:
 
 filebeat.inputs:
 #@ if data.values.cloudwatch_log_group_arn != "":
-  - #@  overlay.apply(cloudwatch_input("drupal/php/"), cw_json_input())
-  - #@  overlay.apply(cloudwatch_input("drupal/cron/"), cw_json_input())
-  - #@ cloudwatch_input("drupal/nginx/")
+  - #@  overlay.apply(cloudwatch_input("php", "drupal/php/"), cw_json_input())
+  - #@  overlay.apply(cloudwatch_input("cron", "drupal/cron/"), cw_json_input())
+  - #@ cloudwatch_input("nginx", "drupal/nginx/")
 #@ end
 
 output.elasticsearch: #@ data.values.elasticsearch
