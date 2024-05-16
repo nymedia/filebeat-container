@@ -12,6 +12,7 @@ elasticsearch:
   hosts: [""]
   #@schema/validation one_of=["http", "https"]
   protocol: "https"
+  api_key: ""
   username: ""
   password: ""
   path: ""
