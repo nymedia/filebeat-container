@@ -45,7 +45,7 @@ jobs:
             type=ref,event=branch
 
       - name: Build and push custom Filebeat image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
